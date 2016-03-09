@@ -1,0 +1,43 @@
+#ifndef __zlog_interface_h
+#define __zlog_interface_h
+
+
+typedef struct zlog_category_s zlog_category_t;
+
+int zlog_init(const char *confpath);
+zlog_category_t *zlog_get_category(const char *cname);
+int zlog_reload(const char *confpath);
+int zlog_change_rule(const char *cname,char *level);
+void zlog_fini(void);
+
+typedef enum {
+	ZLOG_LEVEL_DEBUG = 20,
+	ZLOG_LEVEL_INFO = 40,
+	ZLOG_LEVEL_NOTICE = 60,
+	ZLOG_LEVEL_WARN = 80,
+	ZLOG_LEVEL_ERROR = 100,
+	ZLOG_LEVEL_FATAL = 120
+} zlog_level; 
+/* zlog macros */
+#elif defined __GNUC__
+#define zlog_fatal(cat, format, args...) \
+	zlog(cat, __FILE__, sizeof(__FILE__)-1, __func__, sizeof(__func__)-1, __LINE__, \
+	ZLOG_LEVEL_FATAL, format, ##args)
+#define zlog_error(cat, format, args...) \
+	zlog(cat, __FILE__, sizeof(__FILE__)-1, __func__, sizeof(__func__)-1, __LINE__, \
+	ZLOG_LEVEL_ERROR, format, ##args)
+#define zlog_warn(cat, format, args...) \
+	zlog(cat, __FILE__, sizeof(__FILE__)-1, __func__, sizeof(__func__)-1, __LINE__, \
+	ZLOG_LEVEL_WARN, format, ##args)
+#define zlog_notice(cat, format, args...) \
+	zlog(cat, __FILE__, sizeof(__FILE__)-1, __func__, sizeof(__func__)-1, __LINE__, \
+	ZLOG_LEVEL_NOTICE, format, ##args)
+#define zlog_info(cat, format, args...) \
+	zlog(cat, __FILE__, sizeof(__FILE__)-1, __func__, sizeof(__func__)-1, __LINE__, \
+	ZLOG_LEVEL_INFO, format, ##args)
+#define zlog_debug(cat, format, args...) \
+	zlog(cat, __FILE__, sizeof(__FILE__)-1, __func__, sizeof(__func__)-1, __LINE__, \
+	ZLOG_LEVEL_DEBUG, format, ##args)
+
+
+#endif

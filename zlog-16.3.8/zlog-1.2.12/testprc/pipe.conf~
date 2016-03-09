@@ -1,0 +1,19 @@
+[global]
+
+default format = "%d(%F %T).%us %-6V (%c:%F:%L) - %m%n"
+fsync period = 10
+
+[levels]
+TRACE = 10
+CRIT  = 130
+
+[formats]
+simple  =  "%d %V %m%n"
+normal  =  "%d(%F %T).%ms %V [%c:%p:%F:%L] %m%n"
+
+[rules]
+#pipe.DEBUG     >stdout;normal
+pipe.DEBUG      | ./fifoswp; normal
+#pipe.DEBUG     | /home/iotek/fifoswp; normal
+#pipe.DEBUG     | /usr/bin/cronolog; normal
+#pipe.DEBUG     | /usr/bin/cronolog /www/logs/example_%Y%m%d.log

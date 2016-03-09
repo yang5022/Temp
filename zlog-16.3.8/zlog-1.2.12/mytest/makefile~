@@ -1,0 +1,11 @@
+all             :       zlog_test_press
+zlog_test_press :       %:%.o
+	gcc -O2 -g -o $@ $^ -L../src -lzlog -lpthread -Wl,-rpath ../src
+
+.c.o		:
+	gcc -O2 -g -Wall -D_GNU_SOURCE -o $@ -c $< -I. -I../src
+
+clean		:
+	rm -f press.log* *.o zlog_test_press
+
+.PHONY 		: clean all

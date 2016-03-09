@@ -1,0 +1,18 @@
+all     :     cat   dog  pipe zlog_test_press  change_rules
+cat     :     cattest.o	
+	gcc -o $@ $^ -I../src -L../src -lzlog -lpthread -Wl,-rpath ../src
+dog     :     dogtest.o	
+	gcc -o $@ $^ -I../src -L../src -lzlog -lpthread -Wl,-rpath ../src 
+pipe    :    pipetest.o	
+	gcc -o $@ $^ -I../src -L../src -lzlog -lpthread -Wl,-rpath ../src
+zlog_test_press    :    zlog_test_press.o	
+	gcc -o $@ $^ -I../src -L../src -lzlog -lpthread -Wl,-rpath ../src 
+change_rules    :    change_rules.o	
+	gcc -o $@ $^ -I../src -L../src -lzlog -lpthread -Wl,-rpath ../src 
+.c.o		:
+	gcc -O2 -g -Wall -D_GNU_SOURCE -o $@ -c $< -I. -I../src
+
+clean   :
+	rm -rf press.log* *.o *.~ cat dog pipe pipe zlog_test_press change_rules
+
+.PHONY 	: clean all
